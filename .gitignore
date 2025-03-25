@@ -6,7 +6,6 @@
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-build/
 
 # IDE-related files
 .idea/
