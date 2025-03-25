@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y nodejs npm
 # Install 'serve' globally
 RUN npm install -g serve
 
+# Check if Flutter is correctly installed and available
+RUN flutter --version
+
 # Get Flutter dependencies
 RUN flutter pub get
 
