@@ -1,21 +1,26 @@
-# Use a base image with Node.js and Flutter
+# Use a base image with both Flutter and Node.js installed
 FROM cirrusci/flutter:latest
 
-# Set the working directory
-WORKDIR /usr/src/app
+# Set the working directory to /app
+WORKDIR /app
 
-# Copy the Flutter app files into the container
+# Copy the entire Flutter project into the container
 COPY . .
 
-# Install dependencies (for both Flutter and Node.js)
-RUN flutter pub get
+# Install Node.js (since 'serve' requires Node.js)
+RUN apt-get update && apt-get install -y nodejs npm
+
+# Install 'serve' globally
 RUN npm install -g serve
 
-# Build the Flutter app
+# Get Flutter dependencies
+RUN flutter pub get
+
+# Build the Flutter web app
 RUN flutter build web
 
-# Expose the port
+# Expose the port the app will run on
 EXPOSE 3000
 
-# Start serving the app
-CMD ["serve", "-s", "build/web"]
+# Command to run the web app using 'serve'
+CMD ["serve", "-s", "build/web", "-l", "3000"]
